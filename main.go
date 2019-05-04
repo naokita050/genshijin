@@ -121,12 +121,12 @@ func getParsedWords(words string) string {
 	var parsedWords []string
 	for _, results := range data.Result {
 		for _, token := range results.Tokens {
-			if token.Pos != "格助詞" && token.Pos != "連用助詞" && token.Pos != "引用助詞" && token.Pos != "終助詞" {
+			if token.Pos != "格助詞" && token.Pos != "連用助詞" && token.Pos != "引用助詞" && token.Pos != "終助詞" && token.Pos != "判定詞" {
 				parsedWords = append(parsedWords, token.Kana)
 			}
 		}
 	}
-	return strings.Join(parsedWords, " ")
+	return strings.Join(parsedWords, "..")
 }
 func getAccessToken(clientID string, clientSecret string) string {
 	url := "https://api.ce-cotoha.com/v1/oauth/accesstokens"
