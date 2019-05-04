@@ -3,14 +3,11 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"io"
 	"io/ioutil"
 	"log"
-	"math/rand"
 	"net/http"
 	"os"
 	"strings"
-	"time"
 
 	"github.com/line/line-bot-sdk-go/linebot"
 )
@@ -49,31 +46,7 @@ type NlpResponse struct {
 	Message string `json:"message"`
 }
 
-var meigens = [10]string{
-	"大切なのは、問うことをやめないことだ",
-	"恐れはダークサイドに通じる。恐れは怒りに、怒りは憎しみに、憎しみは苦痛へ。",
-	"私はただ一つの事、ただ一つの夢に生きました",
-	"自分はこれでいいんだと、迷いもしない大人になったらおしまいだよ",
-	"本当に危険なのは、何もしないことだ",
-	"俺の一番嫌いな言葉は「努力」で二番目は「ガンバる」なんだぜ！",
-	"成功する人は、リスクとギャンブルを見極めて行動する",
-	"おまえは今まで食ったパンの枚数をおぼえているのか",
-	"お前は正しかった。私には善の心が残っていた。妹にもそう言ってやれ。",
-	"情熱を持つ１人は、情熱を持たない１００人に勝る",
-}
-
-func genshijinHandler(w http.ResponseWriter, r *http.Request) {
-	rand.Seed(time.Now().UnixNano())
-	originalWord := meigens[rand.Intn(9)]
-	words := getParsedWords(originalWord)
-	io.WriteString(w, "オリジナル: "+originalWord)
-	io.WriteString(w, " \n")
-	io.WriteString(w, "ゲンシジン: "+words)
-}
-
 func main() {
-	http.HandleFunc("/", genshijinHandler)
-
 	bot, err := linebot.New(
 		os.Getenv("CHANNEL_SECRET"),
 		os.Getenv("CHANNEL_TOKEN"),
